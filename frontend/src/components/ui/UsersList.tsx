@@ -1,13 +1,12 @@
 import { User } from "@/lib/types";
+import { fetchUsers } from "@/pages/api/UserApi";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardDescription, CardHeader, CardTitle } from "./card";
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
 export default function UsersList() {
   const { data, error, isLoading } = useQuery<User[]>({
     queryKey: ["users"],
-    queryFn: () => fetch(`${apiUrl}/users`).then((res) => res.json()),
+    queryFn: fetchUsers,
   });
 
   if (isLoading) return <div className="text-center">Loading...</div>;
