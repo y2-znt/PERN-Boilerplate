@@ -1,3 +1,4 @@
+import UserForm from "@/components/ui/UserForm";
 import UsersList from "@/components/ui/UsersList";
 
 export default function Home() {
@@ -7,7 +8,10 @@ export default function Home() {
         <h1 className="text-4xl font-bold pb-12 text-center">
           User Management
         </h1>
-        <UsersList />
+        <div className="space-y-12">
+          <UserForm />
+          <UsersList />
+        </div>
       </div>
     </div>
   );
