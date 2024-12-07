@@ -1,6 +1,17 @@
 version: "3.8"
 
 services:
+  backend:
+    container_name: backend
+    image: backend:latest
+    build:
+      context: ./backend
+      dockerfile: backend.dockerfile
+    ports:
+      - "${BACKEND_PORT}:4000"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+
   db:
     container_name: db
     image: postgres:latest
