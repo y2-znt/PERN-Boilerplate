@@ -11,6 +11,7 @@ export default function UserForm() {
     mutationFn: createUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.resetQueries({ queryKey: ["users"], exact: true });
     },
   });
 
@@ -21,8 +22,11 @@ export default function UserForm() {
       id: 0,
       name: formData.get("name") as string,
       email: formData.get("email") as string,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
     mutation.mutate(user);
+    e.currentTarget.reset();
   };
 
   return (
