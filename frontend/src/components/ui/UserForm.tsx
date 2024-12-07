@@ -34,7 +34,7 @@ export default function UserForm() {
         <Input type="text" name="name" placeholder="Name" required />
         <Input type="email" name="email" placeholder="Email" required />
         <Button type="submit" size="lg">
-          Create User
+          Add new user
         </Button>
       </form>
     </div>
