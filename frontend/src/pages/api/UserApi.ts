@@ -27,3 +27,15 @@ export const createUser = async (user: User) => {
 
   return response.json();
 };
+
+export const deleteUser = async (id: number) => {
+  const response = await fetch(`${apiUrl}/users/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete user");
+  }
+
+  return response.json();
+};
