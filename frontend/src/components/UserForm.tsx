@@ -1,11 +1,12 @@
 import { User } from "@/lib/types";
 import { createUser } from "@/pages/api/UserApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button } from "./button";
-import { Input } from "./input";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 export default function UserForm() {
   const queryClient = useQueryClient();
+
   const mutation = useMutation({
     mutationFn: createUser,
     onSuccess: () => {

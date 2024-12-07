@@ -1,5 +1,5 @@
-import UserForm from "@/components/ui/UserForm";
-import UsersList from "@/components/ui/UsersList";
+import UserForm from "@/components/UserForm";
+import UsersList from "@/components/UsersList";
 
 export default function Home() {
   return (
