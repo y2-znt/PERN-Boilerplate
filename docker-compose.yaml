@@ -1,6 +1,20 @@
 version: "3.8"
 
 services:
+  frontend:
+    container_name: frontend
+    image: frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: frontend.dockerfile
+    ports:
+      - "${FRONTEND_PORT}:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+    restart: always
+    depends_on:
+      - backend
+
   backend:
     container_name: backend
     image: backend:latest
