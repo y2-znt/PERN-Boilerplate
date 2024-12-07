@@ -1,3 +1,9 @@
+import Home from "./Home";
+
 export default function index() {
-  return <div className="text-4xl font-bold">Hello world</div>;
+  return (
+    <div className="max-w-7xl mx-auto">
+      <Home />
+    </div>
+  );
 }
