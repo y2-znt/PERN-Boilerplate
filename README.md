@@ -128,8 +128,8 @@ To get started with this project, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
-   cd PERN-CRUD-BOILERPLATE
+   git clone [<repository-url>](https://github.com/Yoni-Deserbaix/PERN-CRUD-Boilerplate)
+   cd PERN-CRUD-Boilerplate
    ```
 
 2. Set up your environment variables:
@@ -160,7 +160,7 @@ To get started with this project, follow these steps:
 
 ## 🔧 Contributing
 
-[![contributors](https://contrib.rocks/image?repo=yoni-deserbaix/yoni-deserbaix)](https://github.com/Yoni-Deserbaix/Aora/graphs/contributors)
+[![contributors](https://contrib.rocks/image?repo=yoni-deserbaix/yoni-deserbaix)](https://github.com/Yoni-Deserbaix/PERN-CRUD-Boilerplate/graphs/contributors)
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and
 create. Any contributions you make are **greatly appreciated**.
@@ -174,3 +174,13 @@ To fix a bug or enhance an existing module, follow these steps:
 5. Push to the branch (`git push origin improve-feature`)
 6. Create a Pull Request 🎉
 
+
+### 📩 Bug / Feature Request
+
+If you find a bug (failure of a module to execute its intended function), kindly open an issue
+[here](https://github.com/Yoni-Deserbaix/PERN-CRUD-Boilerplate/issues/new) by including the issue with a
+title and clear description.
+
+If you'd like to request a new function, feel free to do so by opening an issue
+[here](https://github.com/Yoni-Deserbaix/PERN-CRUD-Boilerplate/issues/new). Please include sample queries
+and their corresponding results.
