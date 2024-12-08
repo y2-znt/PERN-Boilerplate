@@ -39,3 +39,19 @@ export const deleteUser = async (id: number) => {
 
   return response.json();
 };
+
+export const updateUser = async (user: User) => {
+  const response = await fetch(`${apiUrl}/users/${user.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update user");
+  }
+
+  return response.json();
+};
