@@ -2,21 +2,17 @@ import { User } from "@/lib/types";
 import { deleteUser, fetchUsers, updateUser } from "@/pages/api/UserApi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Button } from "./ui/button";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
-import { Input } from "./ui/input";
+import UserCard from "./UserCard";
 
 export default function UsersList() {
   const queryClient = useQueryClient();
   const [editingUser, setEditingUser] = useState<User | null>(null);
 
-  const { data, error, isLoading } = useQuery<User[]>({
+  const {
+    data: users,
+    error,
+    isLoading,
+  } = useQuery<User[]>({
     queryKey: ["users"],
     queryFn: fetchUsers,
   });
@@ -32,11 +28,16 @@ export default function UsersList() {
   });
 
   if (isLoading) return <div className="text-center">Loading...</div>;
-  if (error) return <div className="text-center">Error loading data</div>;
+  if (error)
+    return (
+      <div className="text-center text-red-600">
+        Error loading data. Please try again later.
+      </div>
+    );
 
-  const sortedUsers = data?.sort((a, b) => {
-    return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
-  });
+  const sortedUsers = users?.sort(
+    (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+  );
 
   const handleEdit = (user: User) => {
     setEditingUser(user);
@@ -49,57 +50,24 @@ export default function UsersList() {
     }
   };
 
+  const handleDelete = (id: number) => {
+    deleteUserMutation.mutate(id);
+  };
+
   return (
     <div className="flex flex-wrap gap-4 justify-center">
-      {sortedUsers &&
-        sortedUsers.map((user) => (
-          <Card key={user.id} className="flex flex-col w-full">
-            <CardHeader>
-              {editingUser && editingUser.id === user.id ? (
-                <>
-                  <Input
-                    type="text"
-                    className="border-2 border-gray-500"
-                    value={editingUser.name}
-                    onChange={(e) =>
-                      setEditingUser({ ...editingUser, name: e.target.value })
-                    }
-                  />
-                  <Input
-                    type="email"
-                    className="border-2 border-gray-500"
-                    value={editingUser.email}
-                    onChange={(e) =>
-                      setEditingUser({ ...editingUser, email: e.target.value })
-                    }
-                  />
-                </>
-              ) : (
-                <>
-                  <CardTitle>{user.name}</CardTitle>
-                  <CardDescription>{user.email}</CardDescription>
-                </>
-              )}
-            </CardHeader>
-            <CardFooter>
-              {editingUser && editingUser.id === user.id ? (
-                <Button variant="outline" onClick={handleSave}>
-                  Save
-                </Button>
-              ) : (
-                <Button variant="outline" onClick={() => handleEdit(user)}>
-                  Edit
-                </Button>
-              )}
-              <Button
-                variant="outline"
-                onClick={() => deleteUserMutation.mutate(user.id)}
-              >
-                Delete
-              </Button>
-            </CardFooter>
-          </Card>
-        ))}
+      {sortedUsers?.map((user) => (
+        <UserCard
+          key={user.id}
+          user={user}
+          isEditing={editingUser?.id === user.id}
+          onEdit={handleEdit}
+          onSave={handleSave}
+          onDelete={handleDelete}
+          editingUser={editingUser}
+          setEditingUser={setEditingUser}
+        />
+      ))}
     </div>
   );
 }
