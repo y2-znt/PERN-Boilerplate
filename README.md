@@ -149,7 +149,8 @@ To get started with this project, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Yoni-Deserbaix/PERN-CRUD-Boilerplate
+   git clone https://github.com/Yoni-Deserbaix/PERN-CRUD-Boilerplate.git
+   
    cd PERN-CRUD-Boilerplate
    ```
 
