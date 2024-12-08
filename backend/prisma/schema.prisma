@@ -1,5 +1,6 @@
 // To create a new migration:
-// docker exec -it backend npx prisma migrate dev --name init
+// npx prisma migrate dev --name init
+// or docker exec -it backend npx prisma migrate dev --name init
 
 generator client {
   provider = "prisma-client-js"
@@ -11,9 +12,9 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(cuid())
-  name  String?
-  email String @unique
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
