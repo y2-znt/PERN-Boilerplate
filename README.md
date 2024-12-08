@@ -5,31 +5,49 @@ The PERN stack consists of PostgreSQL, Express, React (Next.js), and Node.js.
 
 <img width="942" alt="PERN stack schema" src="https://github.com/user-attachments/assets/dc478aa0-6bc3-4237-afd8-332c5d3cfd76">
 
+## 📖 Table of Contents
 
-## Technologies Used 🔪
+<details><summary>Table of Contents</summary>
+
+1. 🔪 [Technologies Used](#technologies-used)
+2. 🐳 [Docker Configuration](#docker-configuration)
+3. 🤸 [Quick Start](#quick-start)
+4. 🔧 [Contributing](#contributing)
+
+</details>
+
+## <a name="technologies-used">Technologies Used 🔪</a>
 
 ### Language
+
 - **TypeScript**: A superset of JavaScript that compiles to plain JavaScript.
 
 ### Backend
+
 - **Express**: A minimal and flexible Node.js web application framework.
 - **MVC**: Model-View-Controller architecture for organizing code.
 - **Node.js**: A JavaScript runtime built on Chrome's V8 JavaScript engine.
 - **Prisma**: ORM (Object-Relational Mapping) tool to facilitate interaction with PostgreSQL database and generate SQL queries more efficiently.
 
 ### Frontend
+
 - **React (Next.js)**: A React framework for building server-side rendered applications.
 - **TanStack Query**: A powerful data-fetching library for React.
 - **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
+- **shadcn/ui**: A component library used for building the frontend.
 
 ### Database
+
 - **PostgreSQL**: Relational database management system used for storing user data, product information, and order details.
 
 ### Containerization
+
 - **Docker**: A platform for developing, shipping, and running applications in containers.
-  
-## Docker Configuration 🐳
+
+## <a name="docker-configuration">Docker Configuration 🐳</a> 
+
 ### Docker Compose file
+
 ```dockerfile
 # docker-compose.yaml
 
@@ -79,8 +97,10 @@ services:
 volumes:
   pgdata: {}
 ```
+
 ### Backend Dockerfile
-``` dockerfile
+
+```dockerfile
 # backend.dockerfile
 
 FROM node:20
@@ -102,7 +122,9 @@ EXPOSE 4000
 CMD ["npm", "run", "dev"]
 
 ```
+
 ### Frontend Dockerfile
+
 ```dockerfile
 # frontend.dockerfile
 
@@ -120,8 +142,7 @@ RUN npm run build
 
 CMD npm run dev
 ```
-
-## 🤸 Quick Start
+## <a name="quick-start">🤸 Quick Start</a>
 
 To get started with this project, follow these steps:
 
@@ -135,7 +156,7 @@ To get started with this project, follow these steps:
 2. Set up your environment variables:
    Create a `.env` file in the `backend` directory and add your PostgreSQL connection string:
 
-   ```   
+   ```
     DATABASE_URL=postgresql://example_user:example_password@localhost:5432/example_db?schema=public
    ```
 
@@ -149,16 +170,13 @@ To get started with this project, follow these steps:
 
    - Frontend: [http://localhost:3000](http://localhost:3000)
    - Backend API: [http://localhost:4000](http://localhost:4000)
-   - DB: [http://localhost:5432](http://localhost:5432) 
+   - DB: [http://localhost:5432](http://localhost:5432)
 
 5. To create a new migration, run:
    ```bash
    npx prisma migrate dev --name init
    ```
-
-
-
-## 🔧 Contributing
+## <a name="contributing">🔧 Contributing</a>
 
 [![contributors](https://contrib.rocks/image?repo=yoni-deserbaix/yoni-deserbaix)](https://github.com/Yoni-Deserbaix/PERN-CRUD-Boilerplate/graphs/contributors)
 
@@ -173,7 +191,6 @@ To fix a bug or enhance an existing module, follow these steps:
 4. Commit your changes (`git commit -am 'Improve feature'`)
 5. Push to the branch (`git push origin improve-feature`)
 6. Create a Pull Request 🎉
-
 
 ### 📩 Bug / Feature Request
 
