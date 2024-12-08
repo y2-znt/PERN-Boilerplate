@@ -1,7 +1,7 @@
-import UserForm from "@/components/UserForm";
-import UsersList from "@/components/UsersList";
+import UserForm from "./components/UserForm";
+import UsersList from "./components/UsersList";
 
-export default function index() {
+export default function page() {
   return (
     <div className="max-w-7xl mx-auto">
       <div className="flex justify-center mx-auto">

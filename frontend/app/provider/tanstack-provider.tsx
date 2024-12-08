@@ -1,14 +1,18 @@
-import "@/styles/globals.css";
+"use client";
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import type { AppProps } from "next/app";
+import { useState } from "react";
 
-const queryClient = new QueryClient();
+type TanstackProviderProps = {
+  children: React.ReactNode;
+};
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function TanstackProvider({ children }: TanstackProviderProps) {
+  const [queryClient] = useState(() => new QueryClient());
   return (
     <QueryClientProvider client={queryClient}>
-      <Component {...pageProps} />
+      {children}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

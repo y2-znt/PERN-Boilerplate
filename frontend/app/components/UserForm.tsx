@@ -1,6 +1,8 @@
-import { User } from "@/lib/types";
-import { createUser } from "@/pages/api/UserApi";
+"use client";
+
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createUser } from "../api/UserApi";
+import { User } from "../lib/types";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
