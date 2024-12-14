@@ -80,6 +80,9 @@ services:
       - "${BACKEND_PORT}:4000"
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
 
   db:
     container_name: db
