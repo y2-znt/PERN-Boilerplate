@@ -14,7 +14,6 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       res.status(400).json({ message: "Email already exists" });
       return;
     }
-
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
       data: {
@@ -23,7 +22,11 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         password: hashedPassword,
       },
     });
-    res.status(201).json({ message: "User created successfully", user });
+    const { password: _, ...userWithoutPassword } = user;
+    res.status(201).json({
+      message: "User created successfully",
+      user: userWithoutPassword,
+    });
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   }
@@ -52,7 +55,10 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       expiresIn: "1h",
     });
 
-    res.status(200).json({ message: "Login successful", user, token });
+    const { password: _, ...userWithoutPassword } = user;
+    res
+      .status(200)
+      .json({ message: "Login successful", user: userWithoutPassword, token });
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   }
