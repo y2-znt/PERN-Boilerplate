@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import corsMiddleware from "./middlewares/corsMiddleware";
+import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 
 const app = express();
@@ -11,7 +12,7 @@ app.use(express.json());
 app.use(corsMiddleware);
 
 // Routes
-app.use(userRoutes);
+app.use(userRoutes, authRoutes);
 
 // test api
 app.get("/", (req: Request, res: Response) => {
