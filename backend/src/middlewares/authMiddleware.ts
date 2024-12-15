@@ -8,11 +8,11 @@ const authMiddleware = async (
   req: AuthenticatedRequest,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   const token = req.cookies.authToken;
 
   if (!token) {
-    return res.status(401).json({ message: "Unauthorized: No token provided" });
+    res.status(401).json({ message: "Unauthorized: No token provided" });
   }
 
   try {
@@ -24,14 +24,15 @@ const authMiddleware = async (
     });
 
     if (!user) {
-      return res.status(401).json({ message: "Unauthorized: User not found" });
+      res.status(401).json({ message: "Unauthorized: User not found" });
+      return;
     }
 
     req.user = { userId: user.id };
     next();
   } catch (error) {
     console.error("Token verification error:", error);
-    return res.status(403).json({ message: "Forbidden: Invalid token" });
+    res.status(403).json({ message: "Forbidden: Invalid token" });
   }
 };
 
