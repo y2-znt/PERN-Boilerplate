@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import corsMiddleware from "./middlewares/corsMiddleware";
+import errorMiddleware from "./middlewares/errorMiddleware";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 
@@ -10,6 +11,9 @@ app.use(express.json());
 
 // CORS
 app.use(corsMiddleware);
+
+// Error handling
+app.use(errorMiddleware);
 
 // Routes
 app.use(userRoutes, authRoutes);
