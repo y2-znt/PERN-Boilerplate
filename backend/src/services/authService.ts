@@ -4,6 +4,7 @@ import { z } from "zod";
 import { JWT_SECRET, SALT_ROUNDS, TOKEN_EXPIRY } from "../config/config";
 import prisma from "../prisma/prismaClient";
 import { loginSchema, registerSchema } from "../schemas/authSchema";
+
 export const registerUser = async (data: z.infer<typeof registerSchema>) => {
   const { name, email, password, confirmPassword } = registerSchema.parse(data);
 
@@ -15,11 +16,7 @@ export const registerUser = async (data: z.infer<typeof registerSchema>) => {
 
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
   const user = await prisma.user.create({
-    data: {
-      name,
-      email,
-      password: hashedPassword,
-    },
+    data: { name, email, password: hashedPassword },
   });
 
   const { password: _, ...userWithoutPassword } = user;
