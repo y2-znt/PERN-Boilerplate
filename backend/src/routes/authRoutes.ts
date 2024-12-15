@@ -3,26 +3,17 @@ import { login, register } from "../controllers/authController";
 
 const router = express.Router();
 
-router.post(
-  "/auth/register",
-  async (req: Request, res: Response, next: NextFunction) => {
+const handleController = (controller: Function) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await register(req, res);
+      await controller(req, res);
     } catch (error) {
       next(error);
     }
-  }
-);
+  };
+};
 
-router.post(
-  "/auth/login",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      await login(req, res);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
+router.post("/auth/register", handleController(register));
+router.post("/auth/login", handleController(login));
 
 export default router;

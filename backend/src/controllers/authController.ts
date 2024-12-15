@@ -5,7 +5,6 @@ import { z } from "zod";
 import prisma from "../prisma/prismaClient";
 import { loginSchema, registerSchema } from "../schemas/authSchema";
 
-// Change Promise<void> en Promise<Response> pour permettre de renvoyer une réponse
 export const register = async (
   req: Request,
   res: Response
