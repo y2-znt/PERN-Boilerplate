@@ -35,3 +35,12 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     handleErrorResponse(res, error);
   }
 };
+
+export const logout = async (req: Request, res: Response): Promise<void> => {
+  try {
+    res.clearCookie("authToken");
+    res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    res.status(500).json({ message: "An error occurred during logout" });
+  }
+};
