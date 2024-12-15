@@ -13,6 +13,7 @@ const authMiddleware = async (
 
   if (!token) {
     res.status(401).json({ message: "Unauthorized: No token provided" });
+    return;
   }
 
   try {

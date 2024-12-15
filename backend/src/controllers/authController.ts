@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { z } from "zod";
 import { loginUser, registerUser } from "../services/authService";
+import { AuthenticatedRequest } from "../types/express";
 
 const handleErrorResponse = (res: Response, error: unknown) => {
   if (error instanceof z.ZodError) {
@@ -33,6 +34,23 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     res.status(200).json({ message: "Login successful", user, token });
   } catch (error) {
     handleErrorResponse(res, error);
+  }
+};
+
+export const getCurrentUser = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    if (!req.user) {
+      res.status(401).json({ message: "Unauthorized: No user found" });
+    }
+
+    const user = req.user;
+    res.status(200).json({ message: "User retrieved successfully", user });
+  } catch (error) {
+    console.error("Error retrieving current user:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
