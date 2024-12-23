@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import { z } from "zod";
-import { JWT_SECRET, SALT_ROUNDS, TOKEN_EXPIRY } from "../config/config";
+import { SALT_ROUNDS } from "../config/config";
 import prisma from "../prisma/prismaClient";
 import { loginSchema, registerSchema } from "../schemas/authSchema";
+import { generateToken } from "../utils/generateToken";
 
 export const registerUser = async (data: z.infer<typeof registerSchema>) => {
   const { name, email, password, confirmPassword } = registerSchema.parse(data);
@@ -19,8 +19,10 @@ export const registerUser = async (data: z.infer<typeof registerSchema>) => {
     data: { name, email, password: hashedPassword },
   });
 
+  const token = generateToken(user.id);
+
   const { password: _, ...userWithoutPassword } = user;
-  return userWithoutPassword;
+  return { user: userWithoutPassword, token };
 };
 
 export const loginUser = async (data: z.infer<typeof loginSchema>) => {
@@ -34,10 +36,26 @@ export const loginUser = async (data: z.infer<typeof loginSchema>) => {
 
   if (!isPasswordValid) throw new Error("Invalid password");
 
-  const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
-    expiresIn: TOKEN_EXPIRY,
-  });
+  const token = generateToken(user.id);
 
   const { password: _, ...userWithoutPassword } = user;
   return { user: userWithoutPassword, token };
+};
+
+export const loggedInUser = async (userId: string) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, name: true, email: true },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return user;
+  } catch (error) {
+    console.error("Error fetching logged-in user:", error);
+    throw new Error("An error occurred while retrieving user information");
+  }
 };
