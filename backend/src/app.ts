@@ -1,22 +1,24 @@
+import cookieParser from "cookie-parser";
 import express, { Request, Response } from "express";
 import corsMiddleware from "./middlewares/corsMiddleware";
 import errorMiddleware from "./middlewares/errorMiddleware";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
-import cookieParser from "cookie-parser";
-const app = express();
 
-// JSON
-app.use(express.json());
+const app = express();
 
 // CORS
 app.use(corsMiddleware);
+
+// JSON
+app.use(express.json());
 
 // Cookie parser
 app.use(cookieParser());
 
 // Routes
-app.use(userRoutes, authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
 // Error handling
 app.use(errorMiddleware);
