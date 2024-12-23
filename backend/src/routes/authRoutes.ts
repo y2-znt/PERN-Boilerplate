@@ -9,9 +9,9 @@ import authMiddleware from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.post("/auth/register", register);
-router.post("/auth/login", login);
-router.get("/auth/current-user", authMiddleware, getCurrentUser);
-router.post("/auth/logout", logout);
+router.post("/register", register);
+router.post("/login", login);
+router.get("/current-user", authMiddleware, getCurrentUser);
+router.post("/logout", logout);
 
 export default router;

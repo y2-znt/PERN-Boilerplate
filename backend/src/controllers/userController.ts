@@ -1,54 +1,60 @@
 import { Request, Response } from "express";
-import prisma from "../prisma/prismaClient";
+import {
+  addUser,
+  editUser,
+  fetchAllUsers,
+  fetchUserById,
+  removeUser,
+} from "../services/userService";
 
-export const getAllUsers = async (req: Request, res: Response) => {
+export const getAllUsers = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
-    const users = await prisma.user.findMany();
+    const users = await fetchAllUsers();
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   }
 };
 
-export const getUserById = async (req: Request, res: Response) => {
+export const getUserById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
-    const user = await prisma.user.findUnique({
-      where: { id: req.params.id },
-    });
+    const user = await fetchUserById(req.params.id);
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   }
 };
 
-export const createUser = async (req: Request, res: Response) => {
+export const createUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { name, email, password } = req.body;
 
   try {
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password,
-      },
-    });
+    const user = await addUser({ name, email, password });
     res.status(201).json(user);
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   }
 };
 
-export const updateUser = async (req: Request, res: Response) => {
+export const updateUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { name, email } = req.body;
 
   try {
-    const user = await prisma.user.update({
-      where: { id: req.params.id },
-      data: {
-        name,
-        email,
-        updatedAt: new Date(),
-      },
+    const user = await editUser(req.params.id, {
+      name,
+      email,
     });
     res.status(200).json(user);
   } catch (error) {
@@ -56,9 +62,12 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteUser = async (req: Request, res: Response) => {
+export const deleteUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
-    await prisma.user.delete({ where: { id: req.params.id } });
+    await removeUser(req.params.id);
     res.status(200).json({ message: "User deleted" });
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
