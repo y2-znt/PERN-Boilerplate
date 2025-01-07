@@ -28,6 +28,10 @@ The PERN stack consists of PostgreSQL, Express, React (Next.js), and Node.js.
 - **MVC**: Model-View-Controller architecture for organizing code.
 - **Node.js**: A JavaScript runtime built on Chrome's V8 JavaScript engine.
 - **Prisma**: ORM (Object-Relational Mapping) tool to facilitate interaction with PostgreSQL database and generate SQL queries more efficiently.
+- **JWT**: JSON Web Token for secure user authentication and authorization.
+- **cookie-parser**: Middleware for parsing HTTP cookies.
+- **bcrypt**: Library for hashing passwords to enhance security.
+- **Zod**: Type-safe schema validation for incoming requests.
 
 ### Frontend
 
@@ -44,7 +48,7 @@ The PERN stack consists of PostgreSQL, Express, React (Next.js), and Node.js.
 
 - **Docker**: A platform for developing, shipping, and running applications in containers.
 
-## <a name="docker-configuration">Docker Configuration 🐳</a> 
+## <a name="docker-configuration">Docker Configuration 🐳</a>
 
 ### Docker Compose file
 
@@ -145,6 +149,7 @@ RUN npm run build
 
 CMD npm run dev
 ```
+
 ## <a name="quick-start">🤸 Quick Start</a>
 
 To get started with this project, follow these steps:
@@ -153,7 +158,7 @@ To get started with this project, follow these steps:
 
    ```bash
    git clone https://github.com/Yoni-Deserbaix/PERN-CRUD-Boilerplate.git
-   
+
    cd PERN-CRUD-Boilerplate
    ```
 
@@ -180,6 +185,7 @@ To get started with this project, follow these steps:
    ```bash
    npx prisma migrate dev --name init
    ```
+
 ## <a name="contributing">🔧 Contributing</a>
 
 [![contributors](https://contrib.rocks/image?repo=yoni-deserbaix/yoni-deserbaix)](https://github.com/Yoni-Deserbaix/PERN-CRUD-Boilerplate/graphs/contributors)
