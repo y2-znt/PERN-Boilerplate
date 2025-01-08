@@ -37,10 +37,6 @@ export default function UsersList() {
       </div>
     );
 
-  const sortedUsers = users?.sort(
-    (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-  );
-
   const handleEdit = (user: User) => {
     setEditingUser(user);
   };
@@ -58,7 +54,7 @@ export default function UsersList() {
 
   return (
     <div className="flex flex-wrap gap-4 justify-center">
-      {sortedUsers?.map((user) => (
+      {users?.map((user) => (
         <UserCard
           key={user.id}
           user={user}
