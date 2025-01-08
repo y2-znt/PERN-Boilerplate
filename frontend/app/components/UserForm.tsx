@@ -24,8 +24,7 @@ export default function UserForm() {
       id: 0,
       name: formData.get("name") as string,
       email: formData.get("email") as string,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      password: formData.get("password") as string,
     };
     mutation.mutate(user);
     e.currentTarget.reset();
@@ -40,6 +39,12 @@ export default function UserForm() {
       >
         <Input type="text" name="name" placeholder="Name" required />
         <Input type="email" name="email" placeholder="Email" required />
+        <Input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
         <Button type="submit" size="lg">
           Add new user
         </Button>
