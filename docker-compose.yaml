@@ -7,8 +7,9 @@ services:
       context: ./frontend
       dockerfile: frontend.dockerfile
     ports:
-      - "${FRONTEND_PORT}:3000"
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     environment:
+      - FRONTEND_PORT=${FRONTEND_PORT}
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     volumes:
       - ./frontend:/app
@@ -24,10 +25,14 @@ services:
       context: ./backend
       dockerfile: backend.dockerfile
     ports:
-      - "${BACKEND_PORT}:4000"
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      - BACKEND_PORT=${BACKEND_PORT}
       - JWT_SECRET=${JWT_SECRET}
+      - SALT_ROUNDS=${SALT_ROUNDS}
+      - TOKEN_EXPIRY=${TOKEN_EXPIRY}
+      - CLIENT_URL=${CLIENT_URL}
     volumes:
       - ./backend:/app
       - /app/node_modules

@@ -1,6 +1,6 @@
 # PERN-CRUD-BOILERPLATE
 
-This project is a Docker boilerplate for a simple CRUD application using the PERN stack. <br/>
+This project is a Docker boilerplate for an application using the PERN stack. <br/>
 The PERN stack consists of PostgreSQL, Express, React (Next.js), and Node.js.
 
 <img width="942" alt="PERN stack schema" src="https://github.com/user-attachments/assets/dc478aa0-6bc3-4237-afd8-332c5d3cfd76">
@@ -25,11 +25,9 @@ The PERN stack consists of PostgreSQL, Express, React (Next.js), and Node.js.
 ### Backend
 
 - **Express**: A minimal and flexible Node.js web application framework.
-- **MVC**: Model-View-Controller architecture for organizing code.
 - **Node.js**: A JavaScript runtime built on Chrome's V8 JavaScript engine.
 - **Prisma**: ORM (Object-Relational Mapping) tool to facilitate interaction with PostgreSQL database and generate SQL queries more efficiently.
 - **JWT**: JSON Web Token for secure user authentication and authorization.
-- **cookie-parser**: Middleware for parsing HTTP cookies.
 - **bcrypt**: Library for hashing passwords to enhance security.
 - **Zod**: Type-safe schema validation for incoming requests.
 
@@ -84,6 +82,10 @@ services:
       - "${BACKEND_PORT}:4000"
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      - JWT_SECRET=${JWT_SECRET}
+      - SALT_ROUNDS=${SALT_ROUNDS}
+      - TOKEN_EXPIRY=${TOKEN_EXPIRY}
+      - CLIENT_URL=${CLIENT_URL}
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -163,7 +165,7 @@ To get started with this project, follow these steps:
    ```
 
 2. Set up your environment variables:
-   Create a `.env` file in the `backend` directory and add your PostgreSQL connection string:
+   Create a `.env` file in the `backend` directory and add your PostgreSQL connection string. This is required for Prisma schema generation, note that Docker will use its own environment variables defined in docker-compose.yml:
 
    ```
     DATABASE_URL=postgresql://example_user:example_password@localhost:5432/example_db?schema=public
