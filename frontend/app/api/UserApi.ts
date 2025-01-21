@@ -1,9 +1,8 @@
+import { API_BASE_URL } from "../config/apiClient";
 import { User } from "../lib/types";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
-
 export const fetchUsers = async () => {
-  const response = await fetch(`${apiUrl}/users`);
+  const response = await fetch(`${API_BASE_URL}/users`);
 
   if (!response.ok) {
     throw new Error("Failed to fetch users");
@@ -13,7 +12,7 @@ export const fetchUsers = async () => {
 };
 
 export const createUser = async (user: User) => {
-  const response = await fetch(`${apiUrl}/users`, {
+  const response = await fetch(`${API_BASE_URL}/users`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -29,7 +28,7 @@ export const createUser = async (user: User) => {
 };
 
 export const deleteUser = async (id: number) => {
-  const response = await fetch(`${apiUrl}/users/${id}`, {
+  const response = await fetch(`${API_BASE_URL}/users/${id}`, {
     method: "DELETE",
   });
 
@@ -41,7 +40,7 @@ export const deleteUser = async (id: number) => {
 };
 
 export const updateUser = async (user: User) => {
-  const response = await fetch(`${apiUrl}/users/${user.id}`, {
+  const response = await fetch(`${API_BASE_URL}/users/${user.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
