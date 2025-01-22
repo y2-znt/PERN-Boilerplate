@@ -1,6 +1,6 @@
 import cors from "cors";
 import express, { Request, Response } from "express";
-import { CLIENT_URL } from "./config/config";
+import { CLIENT_URL } from "./config/env";
 import errorMiddleware from "./middlewares/errorMiddleware";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";

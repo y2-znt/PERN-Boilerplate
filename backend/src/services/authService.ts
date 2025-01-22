@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { z } from "zod";
-import { SALT_ROUNDS } from "../config/config";
-import prisma from "../prisma/prismaClient";
+import { SALT_ROUNDS } from "../config/env";
+import prisma from "../config/prismaClient";
 import { loginSchema, registerSchema } from "../schemas/authSchema";
 import { generateToken } from "../utils/generateToken";
 
