@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import { z } from "zod";
 import { loggedInUser, loginUser, registerUser } from "../services/authService";
-import { clearAuthCookie, setAuthCookie } from "../utils/authCookie";
-import { AuthenticatedRequest } from "../utils/express";
+import { AuthenticatedRequest } from "../types/express";
 
 const handleErrorResponse = (res: Response, error: unknown) => {
   if (error instanceof z.ZodError) {
@@ -16,7 +15,6 @@ export const register = async (req: Request, res: Response): Promise<void> => {
   try {
     const { user, token } = await registerUser(req.body);
 
-    setAuthCookie(res, token);
     console.log("register token", token);
 
     res.status(201).json({ message: "User created successfully", user, token });
@@ -29,7 +27,6 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const { user, token } = await loginUser(req.body);
 
-    setAuthCookie(res, token);
     console.log("login token", token);
 
     res.status(200).json({ message: "Login successful", user, token });
@@ -61,8 +58,6 @@ export const logout = async (
   res: Response
 ): Promise<void> => {
   try {
-    clearAuthCookie(res);
-    console.log("logout token cleared", req.cookies.authToken);
     res.status(200).json({ message: "Logout successful" });
   } catch (error) {
     res.status(500).json({ message: "An error occurred during logout" });
