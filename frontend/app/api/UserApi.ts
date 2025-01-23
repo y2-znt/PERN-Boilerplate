@@ -1,5 +1,5 @@
-import { API_BASE_URL } from "../config/apiClient";
-import { User } from "../lib/types";
+import { API_BASE_URL } from "../utils/apiClient";
+import { User } from "../types/types";
 
 export const fetchUsers = async () => {
   const response = await fetch(`${API_BASE_URL}/users`);

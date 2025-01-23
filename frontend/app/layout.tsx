@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} mx-7 md:mx-auto max-w-7xl`}>
+      <body className={`${inter.className} mx-7 max-w-7xl md:mx-auto`}>
         <TanstackProvider>{children}</TanstackProvider>
       </body>
     </html>

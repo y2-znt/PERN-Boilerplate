@@ -3,7 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { deleteUser, fetchUsers, updateUser } from "../api/UserApi";
-import { User } from "../lib/types";
+import { User } from "../types/types";
 import UserCard from "./UserCard";
 
 export default function UsersList() {
@@ -53,7 +53,7 @@ export default function UsersList() {
   };
 
   return (
-    <div className="flex flex-wrap gap-4 justify-center">
+    <div className="flex flex-wrap justify-center gap-4">
       {users?.map((user) => (
         <UserCard
           key={user.id}

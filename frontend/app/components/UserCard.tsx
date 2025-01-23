@@ -1,4 +1,4 @@
-import { User } from "../lib/types";
+import { User } from "../types/types";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -29,7 +29,7 @@ export default function UserCard({
   setEditingUser,
 }: UserCardType) {
   return (
-    <Card key={user.id} className="flex flex-col w-full">
+    <Card key={user.id} className="flex w-full flex-col">
       <CardHeader>
         {isEditing ? (
           <>
@@ -40,7 +40,7 @@ export default function UserCard({
               value={editingUser?.name || ""}
               onChange={(e) =>
                 setEditingUser((prev) =>
-                  prev ? { ...prev, name: e.target.value } : null
+                  prev ? { ...prev, name: e.target.value } : null,
                 )
               }
             />
@@ -51,7 +51,7 @@ export default function UserCard({
               value={editingUser?.email || ""}
               onChange={(e) =>
                 setEditingUser((prev) =>
-                  prev ? { ...prev, email: e.target.value } : null
+                  prev ? { ...prev, email: e.target.value } : null,
                 )
               }
             />
