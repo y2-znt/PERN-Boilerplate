@@ -68,7 +68,7 @@ export default function LoginForm() {
             <Button
               type="submit"
               className="mt-4 w-full"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isLoading}
             >
               {isLoading ? <LoadingIndicator text="Logging in..." /> : "Login"}
             </Button>
