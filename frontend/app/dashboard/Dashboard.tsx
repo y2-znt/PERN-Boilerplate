@@ -1,31 +1,18 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { logoutUser } from "../api/AuthApi";
 import { Button } from "../components/ui/button";
 import UserForm from "../components/UserForm";
 import UsersList from "../components/UsersList";
-import { useAuthContext } from "../context/authContext";
+import { useLogout } from "../hooks/useLogout";
 
 export default function Dashboard() {
-  const router = useRouter();
-  const { setAuthUser } = useAuthContext();
-
-  const handleLogout = async () => {
-    try {
-      await logoutUser();
-      setAuthUser(null);
-      router.push("/");
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
+  const logout = useLogout();
 
   return (
     <div className="mx-auto max-w-7xl">
       <div className="relative mx-auto flex justify-center">
         <Button
-          onClick={handleLogout}
+          onClick={logout}
           className="absolute right-8 top-8"
           variant="outline"
         >
