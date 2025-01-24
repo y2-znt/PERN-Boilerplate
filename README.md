@@ -1,4 +1,4 @@
-# PERN-CRUD-BOILERPLATE
+# PERN-BOILERPLATE
 
 This project is a Docker boilerplate for an application using the PERN stack. <br/>
 The PERN stack consists of PostgreSQL, Express, React (Next.js), and Node.js.
@@ -35,6 +35,8 @@ The PERN stack consists of PostgreSQL, Express, React (Next.js), and Node.js.
 
 - **React (Next.js)**: A React framework for building server-side rendered applications.
 - **TanStack Query**: A powerful data-fetching library for React.
+- **React Hook Form**: A library for easy and efficient form management in React applications.
+- **Zod**: A TypeScript-first schema declaration and validation library, used for validating and parsing user input.
 - **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
 - **shadcn/ui**: A component library used for building the frontend.
 
