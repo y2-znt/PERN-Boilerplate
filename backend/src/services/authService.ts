@@ -5,7 +5,7 @@ import { LoginSchema, RegisterSchema } from "../schemas/authSchema";
 import { generateToken } from "../utils/generateToken";
 
 export const registerUser = async (data: RegisterSchema) => {
-  const { name, email, password, confirmPassword } = data;
+  const { username, email, password, confirmPassword } = data;
 
   if (password !== confirmPassword) throw new Error("Passwords do not match");
 
@@ -15,7 +15,7 @@ export const registerUser = async (data: RegisterSchema) => {
 
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
   const user = await prisma.user.create({
-    data: { name, email, password: hashedPassword },
+    data: { username, email, password: hashedPassword },
   });
 
   const token = generateToken(user.id);
@@ -45,7 +45,7 @@ export const loggedInUser = async (userId: string) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { id: true, name: true, email: true },
+      select: { id: true, username: true, email: true },
     });
 
     if (!user) {

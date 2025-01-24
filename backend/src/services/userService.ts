@@ -25,18 +25,18 @@ export const fetchUserById = async (id: string) => {
 };
 
 export const addUser = async ({
-  name,
+  username,
   email,
   password,
 }: {
-  name: string;
+  username: string;
   email: string;
   password: string;
 }) => {
   try {
     const user = await prisma.user.create({
       data: {
-        name,
+        username,
         email,
         password,
       },
@@ -50,13 +50,13 @@ export const addUser = async ({
 
 export const editUser = async (
   id: string,
-  { name, email }: { name?: string; email?: string }
+  { username, email }: { username?: string; email?: string }
 ) => {
   try {
     const user = await prisma.user.update({
       where: { id },
       data: {
-        name,
+        username,
         email,
       },
     });
