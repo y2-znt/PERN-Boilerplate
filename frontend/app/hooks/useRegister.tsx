@@ -33,5 +33,8 @@ export const useRegister = () => {
     },
   });
 
-  return registerMutation;
+  return {
+    signUp: registerMutation.mutate,
+    isLoading: registerMutation.isPending,
+  };
 };
