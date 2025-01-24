@@ -1,4 +1,5 @@
 import { API_BASE_URL } from "../utils/apiClient";
+import { getToken } from "../utils/getToken";
 
 export const registerUser = async (
   name: string,
@@ -73,6 +74,30 @@ export const logoutUser = async () => {
     }
   } catch (error) {
     console.error("Logout error:", error);
+    throw error;
+  }
+};
+
+export const fetchAuthUser = async () => {
+  try {
+    const token = getToken();
+    if (!token) throw new Error("No token found");
+
+    const response = await fetch(`${API_BASE_URL}/auth/current-user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch user: ${response.status}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching auth user:", error);
     throw error;
   }
 };
