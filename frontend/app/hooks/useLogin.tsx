@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { loginUser } from "../api/AuthApi";
 import { useAuthContext } from "../context/authContext";
 
@@ -9,21 +10,35 @@ export const useLogin = () => {
 
   const loginMutation = useMutation({
     mutationFn: async (data: { email: string; password: string }) => {
-      console.log("data :", data);
       const response = await loginUser(data.email, data.password);
-      console.log("response :", response);
       return response;
     },
+    onMutate: () => {
+      toast.loading("Logging in...");
+    },
     onSuccess: (data) => {
-      console.log("Login successful!", data);
-      setAuthUser(data);
+      toast.success("Logged in successfully ! 🎉 ");
+      setAuthUser(data.user);
       router.push("/dashboard");
     },
     onError: (error: Error) => {
-      console.error("Login failed:", error.message);
-      alert(error.message || "Login failed");
+      if (error.message === "User not found") {
+        toast.error("Email or password incorrect");
+      } else if (error.message === "Invalid password") {
+        toast.error("Password incorrect");
+      } else {
+        toast.error("An error occurred. Please try again.");
+      }
+
+      console.error("Erreur :", error.message);
+    },
+    onSettled: () => {
+      toast.dismiss();
     },
   });
 
-  return loginMutation;
+  return {
+    login: loginMutation.mutate,
+    isLoading: loginMutation.isPending,
+  };
 };

@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { registerUser } from "../api/AuthApi";
 import { useAuthContext } from "../context/authContext";
 
@@ -22,16 +23,30 @@ export const useRegister = () => {
       );
       return response;
     },
+    onMutate: () => {
+      toast.loading("Registering...");
+    },
     onSuccess: (data) => {
-      console.log("Register successful!", data);
-      setAuthUser(data);
+      toast.success("Register successful ! 🎉");
+      setAuthUser(data.user);
       router.push("/dashboard");
     },
     onError: (error: Error) => {
-      console.error("Register failed:", error.message);
-      alert(error.message || "Registration failed");
+      if (error.message === "Email already exists") {
+        toast.error("Email already exists");
+      } else if (error.message === "Validation error") {
+        toast.error("Invalid email or password");
+      } else {
+        toast.error("An error occurred. Please try again.");
+      }
+    },
+    onSettled: () => {
+      toast.dismiss();
     },
   });
 
-  return registerMutation;
+  return {
+    signUp: registerMutation.mutate,
+    isLoading: registerMutation.isPending,
+  };
 };

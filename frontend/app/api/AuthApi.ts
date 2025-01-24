@@ -2,7 +2,7 @@ import { API_BASE_URL } from "../utils/apiClient";
 import { getToken } from "../utils/getToken";
 
 export const registerUser = async (
-  name: string,
+  username: string,
   email: string,
   password: string,
   confirmPassword: string,
@@ -13,7 +13,7 @@ export const registerUser = async (
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, password, confirmPassword }),
+      body: JSON.stringify({ username, email, password, confirmPassword }),
     });
 
     if (response.ok) {

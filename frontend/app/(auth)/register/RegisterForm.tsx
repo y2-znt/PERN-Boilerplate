@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { FormField } from "../../components/FormField";
+import LoadingIndicator from "../../components/LoadingIndicator";
 import { Button } from "../../components/ui/button";
 import {
   Card,
@@ -15,7 +16,7 @@ import { useRegister } from "../../hooks/useRegister";
 import { RegisterFormValues, RegisterSchema } from "../../schemas/authSchema";
 
 export default function RegisterForm() {
-  const registerMutation = useRegister();
+  const { signUp, isLoading } = useRegister();
 
   const {
     register,
@@ -26,7 +27,7 @@ export default function RegisterForm() {
   });
 
   const onSubmit = (data: RegisterFormValues) => {
-    registerMutation.mutate(data);
+    signUp(data);
   };
 
   return (
@@ -71,8 +72,16 @@ export default function RegisterForm() {
                 register={register("confirmPassword")}
                 error={errors.confirmPassword}
               />
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? "Creating account..." : "Create Account"}
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isSubmitting || isLoading}
+              >
+                {isLoading ? (
+                  <LoadingIndicator text="Creating account..." />
+                ) : (
+                  "Register"
+                )}
               </Button>
               <Button variant="outline" className="w-full">
                 Register with Google

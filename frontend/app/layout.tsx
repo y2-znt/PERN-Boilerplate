@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "sonner";
 import { AuthContextProvider } from "./context/authContext";
 import "./globals.css";
 import TanstackProvider from "./provider/tanstack-provider";
@@ -20,7 +21,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} mx-7 max-w-7xl md:mx-auto`}>
         <TanstackProvider>
-          <AuthContextProvider>{children}</AuthContextProvider>
+          <AuthContextProvider>
+            <Toaster richColors position="bottom-left" />
+            {children}
+          </AuthContextProvider>
         </TanstackProvider>
       </body>
     </html>
