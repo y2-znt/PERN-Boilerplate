@@ -35,10 +35,10 @@ export const createUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { name, email, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
-    const user = await addUser({ name, email, password });
+    const user = await addUser({ username, email, password });
     res.status(201).json(user);
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
@@ -49,11 +49,11 @@ export const updateUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { name, email } = req.body;
+  const { username, email } = req.body;
 
   try {
     const user = await editUser(req.params.id, {
-      name,
+      username,
       email,
     });
     res.status(200).json(user);
