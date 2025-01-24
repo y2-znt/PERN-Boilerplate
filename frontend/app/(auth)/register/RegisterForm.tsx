@@ -14,9 +14,11 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { InputWithLabel } from "../../components/ui/InputWithLabel";
+import { useAuthContext } from "../../context/authContext";
 import { RegisterFormValues, RegisterSchema } from "../../schemas/authSchema";
 
 export default function RegisterForm() {
+  const { setAuthUser } = useAuthContext();
   const router = useRouter();
   const {
     register,
@@ -38,6 +40,7 @@ export default function RegisterForm() {
     },
     onSuccess: (data) => {
       console.log("Register successful!", data);
+      setAuthUser(data);
       router.push("/dashboard");
     },
     onError: (error: Error) => {
