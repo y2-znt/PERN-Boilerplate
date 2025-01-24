@@ -1,4 +1,4 @@
-import { User } from "../types/types";
+import { AuthUserType } from "../types/types";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -10,13 +10,13 @@ import {
 import { Input } from "./ui/input";
 
 type UserCardType = {
-  user: User;
+  user: AuthUserType;
   isEditing: boolean;
-  onEdit: (user: User) => void;
+  onEdit: (user: AuthUserType) => void;
   onSave: () => void;
-  onDelete: (id: number) => void;
-  editingUser: User | null;
-  setEditingUser: React.Dispatch<React.SetStateAction<User | null>>;
+  onDelete: (id: string) => void;
+  editingUser: AuthUserType | null;
+  setEditingUser: React.Dispatch<React.SetStateAction<AuthUserType | null>>;
 };
 
 export default function UserCard({
@@ -35,12 +35,12 @@ export default function UserCard({
           <>
             <Input
               type="text"
-              aria-label="Edit name"
+              aria-label="Edit username"
               className="border-2 border-gray-500"
-              value={editingUser?.name || ""}
+              value={editingUser?.username || ""}
               onChange={(e) =>
                 setEditingUser((prev) =>
-                  prev ? { ...prev, name: e.target.value } : null,
+                  prev ? { ...prev, username: e.target.value } : null,
                 )
               }
             />
@@ -58,7 +58,7 @@ export default function UserCard({
           </>
         ) : (
           <>
-            <CardTitle>{user.name}</CardTitle>
+            <CardTitle>{user.username}</CardTitle>
             <CardDescription>{user.email}</CardDescription>
           </>
         )}

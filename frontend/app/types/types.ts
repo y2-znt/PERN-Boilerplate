@@ -1,6 +1,6 @@
-export interface User {
-  id: number;
-  name: string;
+export interface AuthUserType {
+  id: string;
+  username: string;
   email: string;
-  password: string;
+  role?: string;
 }
