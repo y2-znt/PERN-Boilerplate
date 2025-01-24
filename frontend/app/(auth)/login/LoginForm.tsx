@@ -15,9 +15,10 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { InputWithLabel } from "../../components/ui/InputWithLabel";
+import { useAuthContext } from "../../context/authContext";
 import { LoginFormValues, LoginSchema } from "../../schemas/authSchema";
-
 export default function LoginForm() {
+  const { setAuthUser } = useAuthContext();
   const router = useRouter();
   const {
     register,
@@ -29,13 +30,14 @@ export default function LoginForm() {
 
   const loginMutation = useMutation({
     mutationFn: async (data: LoginFormValues) => {
-      console.log("Mutation exécutée avec :", data);
+      console.log("data :", data);
       const response = await loginUser(data.email, data.password);
-      console.log("Réponse de l'API :", response);
+      console.log("response :", response);
       return response;
     },
     onSuccess: (data) => {
       console.log("Login successful!", data);
+      setAuthUser(data);
       router.push("/dashboard");
     },
     onError: (error: Error) => {
