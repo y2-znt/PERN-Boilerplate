@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createUser } from "../api/UserApi";
-import { User } from "../lib/types";
+import { User } from "../types/types";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
@@ -35,7 +35,7 @@ export default function UserForm() {
       <form
         onSubmit={handleSubmit}
         method="post"
-        className="flex flex-col gap-4 w-full mx-auto"
+        className="mx-auto flex w-full flex-col gap-4"
       >
         <Input type="text" name="name" placeholder="Name" required />
         <Input type="email" name="email" placeholder="Email" required />
