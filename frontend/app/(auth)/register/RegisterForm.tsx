@@ -72,7 +72,11 @@ export default function RegisterForm() {
                 register={register("confirmPassword")}
                 error={errors.confirmPassword}
               />
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isSubmitting || isLoading}
+              >
                 {isLoading ? (
                   <LoadingIndicator text="Creating account..." />
                 ) : (
