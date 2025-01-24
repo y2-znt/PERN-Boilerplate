@@ -1,30 +1,18 @@
+import React from "react";
 import { Input } from "./input";
 import { Label } from "./label";
 
-interface InputWithLabelProps {
+interface InputWithLabelProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   id: string;
-  type: string;
-  placeholder?: string;
-  required?: boolean;
 }
 
-export function InputWithLabel({
-  label,
-  id,
-  type,
-  placeholder,
-  required,
-}: InputWithLabelProps) {
+export function InputWithLabel({ label, id, ...props }: InputWithLabelProps) {
   return (
     <div className="grid w-full max-w-sm items-center gap-1.5">
       <Label htmlFor={id}>{label}</Label>
-      <Input
-        type={type}
-        id={id}
-        placeholder={placeholder}
-        required={required}
-      />
+      <Input id={id} {...props} />
     </div>
   );
 }
