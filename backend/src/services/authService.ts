@@ -1,12 +1,11 @@
 import bcrypt from "bcrypt";
-import { z } from "zod";
 import { SALT_ROUNDS } from "../config/env";
 import prisma from "../config/prismaClient";
-import { loginSchema, registerSchema } from "../schemas/authSchema";
+import { LoginSchema, RegisterSchema } from "../schemas/authSchema";
 import { generateToken } from "../utils/generateToken";
 
-export const registerUser = async (data: z.infer<typeof registerSchema>) => {
-  const { name, email, password, confirmPassword } = registerSchema.parse(data);
+export const registerUser = async (data: RegisterSchema) => {
+  const { name, email, password, confirmPassword } = data;
 
   if (password !== confirmPassword) throw new Error("Passwords do not match");
 
@@ -25,8 +24,8 @@ export const registerUser = async (data: z.infer<typeof registerSchema>) => {
   return { user: userWithoutPassword, token };
 };
 
-export const loginUser = async (data: z.infer<typeof loginSchema>) => {
-  const { email, password } = loginSchema.parse(data);
+export const loginUser = async (data: LoginSchema) => {
+  const { email, password } = data;
 
   const user = await prisma.user.findUnique({ where: { email } });
 
