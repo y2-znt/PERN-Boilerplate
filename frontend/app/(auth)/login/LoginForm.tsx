@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { FormField } from "../../components/FormField";
+import LoadingIndicator from "../../components/LoadingIndicator";
 import { Button } from "../../components/ui/button";
 import {
   Card,
@@ -16,7 +17,7 @@ import { useLogin } from "../../hooks/useLogin";
 import { LoginFormValues, LoginSchema } from "../../schemas/authSchema";
 
 export default function LoginForm() {
-  const loginMutation = useLogin();
+  const { login, isLoading } = useLogin();
 
   const {
     register,
@@ -27,7 +28,7 @@ export default function LoginForm() {
   });
 
   const onSubmit = (data: LoginFormValues) => {
-    loginMutation.mutate(data);
+    login(data);
   };
 
   return (
@@ -69,7 +70,7 @@ export default function LoginForm() {
               className="mt-4 w-full"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Logging in..." : "Login"}
+              {isLoading ? <LoadingIndicator text="Logging in..." /> : "Login"}
             </Button>
             <Button variant="outline" className="mt-4 w-full">
               Login with Google

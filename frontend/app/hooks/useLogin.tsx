@@ -16,7 +16,7 @@ export const useLogin = () => {
     },
     onSuccess: (data) => {
       console.log("Login successful!", data);
-      setAuthUser(data);
+      setAuthUser(data.user);
       router.push("/dashboard");
     },
     onError: (error: Error) => {
@@ -25,5 +25,8 @@ export const useLogin = () => {
     },
   });
 
-  return loginMutation;
+  return {
+    login: loginMutation.mutate,
+    isLoading: loginMutation.isPending,
+  };
 };
