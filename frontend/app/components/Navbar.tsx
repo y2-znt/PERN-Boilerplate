@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useAuthContext } from "../context/authContext";
 import { Button } from "./ui/button";
+import { ThemeToggle } from "./ui/themeToggle";
 
 export default function Navbar() {
   const { authUser } = useAuthContext();
@@ -19,6 +20,7 @@ export default function Navbar() {
             <Button>Login</Button>
           </Link>
         )}
+        <ThemeToggle />
       </div>
     </div>
   );

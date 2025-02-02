@@ -2,6 +2,7 @@
 
 import LoadingIndicator from "../components/LoadingIndicator";
 import { Button } from "../components/ui/button";
+import { ThemeToggle } from "../components/ui/themeToggle";
 import UserForm from "../components/UserForm";
 import UsersList from "../components/UsersList";
 import { useLogout } from "../hooks/useLogout";
@@ -12,14 +13,16 @@ export default function Dashboard() {
   return (
     <div className="mx-auto max-w-7xl">
       <div className="relative mx-auto flex justify-center">
-        <Button
-          onClick={() => logout()}
-          className="absolute right-8 top-8"
-          variant="outline"
-          disabled={isLoading}
-        >
-          {isLoading ? <LoadingIndicator text="Logout..." /> : "Logout"}
-        </Button>
+        <div className="absolute right-8 top-8 flex items-center gap-4">
+          <Button
+            onClick={() => logout()}
+            variant="outline"
+            disabled={isLoading}
+          >
+            {isLoading ? <LoadingIndicator text="Logout..." /> : "Logout"}
+          </Button>
+          <ThemeToggle />
+        </div>
         <div className="mt-12 w-full px-8 md:w-1/2">
           <h1 className="pb-12 text-center text-4xl font-bold">
             User Management
