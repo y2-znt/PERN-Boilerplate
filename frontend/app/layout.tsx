@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import { AuthContextProvider } from "./context/authContext";
 import "./globals.css";
 import TanstackProvider from "./provider/tanstack-provider";
+import { ThemeProvider } from "./provider/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,12 +19,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} mx-7 max-w-7xl md:mx-auto`}>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${inter.className} mx-7 max-w-7xl bg-background md:mx-auto`}
+      >
         <TanstackProvider>
           <AuthContextProvider>
-            <Toaster richColors position="bottom-left" />
-            {children}
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Toaster richColors position="bottom-left" />
+              {children}
+            </ThemeProvider>
           </AuthContextProvider>
         </TanstackProvider>
       </body>
