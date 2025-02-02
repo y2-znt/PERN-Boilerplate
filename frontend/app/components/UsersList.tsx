@@ -3,18 +3,18 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { deleteUser, fetchUsers, updateUser } from "../api/UserApi";
-import { User } from "../types/types";
+import { AuthUserType } from "../types/types";
 import UserCard from "./UserCard";
 
 export default function UsersList() {
   const queryClient = useQueryClient();
-  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [editingUser, setEditingUser] = useState<AuthUserType | null>(null);
 
   const {
     data: users,
     error,
     isLoading,
-  } = useQuery<User[]>({
+  } = useQuery<AuthUserType[]>({
     queryKey: ["users"],
     queryFn: fetchUsers,
   });
@@ -37,7 +37,7 @@ export default function UsersList() {
       </div>
     );
 
-  const handleEdit = (user: User) => {
+  const handleEdit = (user: AuthUserType) => {
     setEditingUser(user);
   };
 
@@ -48,7 +48,7 @@ export default function UsersList() {
     }
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     deleteUserMutation.mutate(id);
   };
 

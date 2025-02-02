@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createUser } from "../api/UserApi";
-import { User } from "../types/types";
+import { AuthUserType } from "../types/types";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
@@ -20,11 +20,10 @@ export default function UserForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const user: User = {
-      id: 0,
-      name: formData.get("name") as string,
+    const user: AuthUserType = {
+      id: "0",
+      username: formData.get("name") as string,
       email: formData.get("email") as string,
-      password: formData.get("password") as string,
     };
     mutation.mutate(user);
     e.currentTarget.reset();

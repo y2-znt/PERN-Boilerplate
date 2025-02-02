@@ -1,5 +1,5 @@
+import { AuthUserType } from "../types/types";
 import { API_BASE_URL } from "../utils/apiClient";
-import { User } from "../types/types";
 
 export const fetchUsers = async () => {
   const response = await fetch(`${API_BASE_URL}/users`);
@@ -11,7 +11,7 @@ export const fetchUsers = async () => {
   return response.json();
 };
 
-export const createUser = async (user: User) => {
+export const createUser = async (user: AuthUserType) => {
   const response = await fetch(`${API_BASE_URL}/users`, {
     method: "POST",
     headers: {
@@ -27,7 +27,7 @@ export const createUser = async (user: User) => {
   return response.json();
 };
 
-export const deleteUser = async (id: number) => {
+export const deleteUser = async (id: string) => {
   const response = await fetch(`${API_BASE_URL}/users/${id}`, {
     method: "DELETE",
   });
@@ -39,7 +39,7 @@ export const deleteUser = async (id: number) => {
   return response.json();
 };
 
-export const updateUser = async (user: User) => {
+export const updateUser = async (user: AuthUserType) => {
   const response = await fetch(`${API_BASE_URL}/users/${user.id}`, {
     method: "PUT",
     headers: {
