@@ -1,13 +1,13 @@
-import { AuthUserType } from "../types/types";
-import { Button } from "./ui/button";
+import { AuthUserType } from "../../types/types";
+import { Button } from "../ui/button";
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Input } from "./ui/input";
+} from "../ui/card";
+import { Input } from "../ui/input";
 
 type UserCardType = {
   user: AuthUserType;

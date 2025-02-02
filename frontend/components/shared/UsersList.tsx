@@ -2,8 +2,8 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { deleteUser, fetchUsers, updateUser } from "../api/UserApi";
-import { AuthUserType } from "../types/types";
+import { deleteUser, fetchUsers, updateUser } from "../../lib/api/UserApi";
+import { AuthUserType } from "../../types/types";
 import UserCard from "./UserCard";
 
 export default function UsersList() {

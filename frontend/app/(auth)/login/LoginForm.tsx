@@ -3,18 +3,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { FormField } from "../../components/FormField";
-import LoadingIndicator from "../../components/LoadingIndicator";
-import { Button } from "../../components/ui/button";
+import { FormField } from "../../../components/shared/FormField";
+import LoadingIndicator from "../../../components/shared/LoadingIndicator";
+import { Button } from "../../../components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../components/ui/card";
-import { useLogin } from "../../hooks/useLogin";
-import { LoginFormValues, LoginSchema } from "../../schemas/authSchema";
+} from "../../../components/ui/card";
+import { useLogin } from "../../../hooks/useLogin";
+import { LoginFormValues, LoginSchema } from "../../../schemas/authSchema";
 
 export default function LoginForm() {
   const { login, isLoading } = useLogin();

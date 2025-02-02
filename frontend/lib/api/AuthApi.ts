@@ -1,5 +1,4 @@
-import { API_BASE_URL } from "../utils/apiClient";
-import { getToken } from "../utils/getToken";
+import { API_BASE_URL, getToken } from "../../config/config";
 
 export const registerUser = async (
   username: string,

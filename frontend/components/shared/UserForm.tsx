@@ -1,10 +1,10 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createUser } from "../api/UserApi";
-import { AuthUserType } from "../types/types";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { createUser } from "../../lib/api/UserApi";
+import { AuthUserType } from "../../types/types";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 export default function UserForm() {
   const queryClient = useQueryClient();

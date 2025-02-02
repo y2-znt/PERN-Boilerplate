@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
-import { AuthContextProvider } from "./context/authContext";
+import { AuthContextProvider } from "../context/authContext";
+import TanstackProvider from "../context/tanstack-provider";
+import { ThemeProvider } from "../context/theme-provider";
 import "./globals.css";
-import TanstackProvider from "./provider/tanstack-provider";
-import { ThemeProvider } from "./provider/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 

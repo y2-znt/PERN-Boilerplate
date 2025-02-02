@@ -1,11 +1,11 @@
 "use client";
 
-import LoadingIndicator from "../components/LoadingIndicator";
-import { Button } from "../components/ui/button";
-import { ThemeToggle } from "../components/ui/themeToggle";
-import UserForm from "../components/UserForm";
-import UsersList from "../components/UsersList";
-import { useLogout } from "../hooks/useLogout";
+import LoadingIndicator from "../../components/shared/LoadingIndicator";
+import UserForm from "../../components/shared/UserForm";
+import UsersList from "../../components/shared/UsersList";
+import { Button } from "../../components/ui/button";
+import { ThemeToggle } from "../../components/ui/themeToggle";
+import { useLogout } from "../../hooks/useLogout";
 
 export default function Dashboard() {
   const { logout, isLoading } = useLogout();

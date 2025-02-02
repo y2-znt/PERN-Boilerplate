@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { loginUser } from "../api/AuthApi";
 import { useAuthContext } from "../context/authContext";
+import { loginUser } from "../lib/api/AuthApi";
 
 export const useLogin = () => {
   const { setAuthUser } = useAuthContext();

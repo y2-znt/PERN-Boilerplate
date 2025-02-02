@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useAuthContext } from "../context/authContext";
-import { Button } from "./ui/button";
-import { ThemeToggle } from "./ui/themeToggle";
+import { useAuthContext } from "../../context/authContext";
+import { Button } from "../ui/button";
+import { ThemeToggle } from "../ui/themeToggle";
 
 export default function Navbar() {
   const { authUser } = useAuthContext();
