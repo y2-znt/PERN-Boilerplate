@@ -161,9 +161,9 @@ To get started with this project, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Yoni-Deserbaix/PERN-CRUD-Boilerplate.git
+   git clone https://github.com/y2-znt/PERN-Boilerplate.git
 
-   cd PERN-CRUD-Boilerplate
+   cd PERN-Boilerplate
    ```
 
 2. Set up your environment variables:
@@ -209,9 +209,9 @@ To fix a bug or enhance an existing module, follow these steps:
 ### 📩 Bug / Feature Request
 
 If you find a bug (failure of a module to execute its intended function), kindly open an issue
-[here](https://github.com/Yoni-Deserbaix/PERN-CRUD-Boilerplate/issues/new) by including the issue with a
+[here](https://github.com/y2-znt/PERN-Boilerplate/issues/new) by including the issue with a
 title and clear description.
 
 If you'd like to request a new function, feel free to do so by opening an issue
-[here](https://github.com/Yoni-Deserbaix/PERN-CRUD-Boilerplate/issues/new). Please include sample queries
+[here](https://github.com/y2-znt/PERN-Boilerplate/issues/new). Please include sample queries
 and their corresponding results.
