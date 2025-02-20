@@ -6,6 +6,7 @@ import {
   fetchUserById,
   removeUser,
 } from "../services/userService";
+import { handleErrorResponse } from "../utils/errorHandler";
 
 export const getAllUsers = async (
   req: Request,
@@ -15,7 +16,7 @@ export const getAllUsers = async (
     const users = await fetchAllUsers();
     res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ message: (error as Error).message });
+    handleErrorResponse(res, error);
   }
 };
 
@@ -27,7 +28,7 @@ export const getUserById = async (
     const user = await fetchUserById(req.params.id);
     res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ message: (error as Error).message });
+    handleErrorResponse(res, error);
   }
 };
 
@@ -41,7 +42,7 @@ export const createUser = async (
     const user = await addUser({ username, email, password });
     res.status(201).json(user);
   } catch (error) {
-    res.status(500).json({ message: (error as Error).message });
+    handleErrorResponse(res, error);
   }
 };
 
@@ -58,7 +59,7 @@ export const updateUser = async (
     });
     res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ message: (error as Error).message });
+    handleErrorResponse(res, error);
   }
 };
 
@@ -70,6 +71,6 @@ export const deleteUser = async (
     await removeUser(req.params.id);
     res.status(200).json({ message: "User deleted" });
   } catch (error) {
-    res.status(500).json({ message: (error as Error).message });
+    handleErrorResponse(res, error);
   }
 };
