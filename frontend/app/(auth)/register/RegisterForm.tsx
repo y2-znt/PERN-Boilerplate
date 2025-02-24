@@ -1,6 +1,8 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FormField } from "../../../components/shared/FormField";
 import LoadingIndicator from "../../../components/shared/LoadingIndicator";
@@ -12,7 +14,9 @@ import {
   CardHeader,
   CardTitle,
 } from "../../../components/ui/card";
+import { useAuthContext } from "../../../context/authContext";
 import { useRegister } from "../../../hooks/useRegister";
+import { googleAuth } from "../../../lib/api/AuthApi";
 import {
   RegisterFormValues,
   RegisterSchema,
@@ -20,6 +24,14 @@ import {
 
 export default function RegisterForm() {
   const { signUp, isLoading } = useRegister();
+
+  const { authUser } = useAuthContext();
+
+  useEffect(() => {
+    if (authUser) {
+      redirect("/dashboard");
+    }
+  }, [authUser]);
 
   const {
     register,
@@ -86,17 +98,21 @@ export default function RegisterForm() {
                   "Register"
                 )}
               </Button>
-              <Button variant="outline" className="w-full">
-                Register with Google
-              </Button>
-            </div>
-            <div className="mt-4 text-center text-sm">
-              Already have an account?{" "}
-              <Link href="/login" className="underline underline-offset-4">
-                Login
-              </Link>
             </div>
           </form>
+          <Button
+            onClick={googleAuth}
+            variant="outline"
+            className="mt-4 w-full"
+          >
+            Register with Google
+          </Button>
+          <div className="mt-4 text-center text-sm">
+            Already have an account?{" "}
+            <Link href="/login" className="underline underline-offset-4">
+              Login
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>

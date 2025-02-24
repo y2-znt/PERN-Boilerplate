@@ -100,3 +100,7 @@ export const fetchAuthUser = async () => {
     throw error;
   }
 };
+
+export const googleAuth = async () => {
+  window.location.href = `${API_BASE_URL}/auth/google`;
+};

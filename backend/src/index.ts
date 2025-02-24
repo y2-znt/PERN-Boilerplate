@@ -1,6 +1,8 @@
 import cors from "cors";
 import express, { Request, Response } from "express";
+import passport from "passport";
 import { CLIENT_URL } from "./config/env";
+import "./config/passport";
 import errorMiddleware from "./middlewares/errorMiddleware";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
@@ -14,6 +16,9 @@ app.use(errorMiddleware);
 
 // JSON
 app.use(express.json());
+
+// Passport
+app.use(passport.initialize());
 
 // Routes
 app.use("/api/users", userRoutes);

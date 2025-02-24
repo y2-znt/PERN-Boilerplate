@@ -33,6 +33,9 @@ services:
       - SALT_ROUNDS=${SALT_ROUNDS}
       - TOKEN_EXPIRY=${TOKEN_EXPIRY}
       - CLIENT_URL=${CLIENT_URL}
+      - SERVER_URL=${SERVER_URL}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
     volumes:
       - ./backend:/app
       - /app/node_modules
