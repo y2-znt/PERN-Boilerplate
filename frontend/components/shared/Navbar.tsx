@@ -9,7 +9,9 @@ export default function Navbar() {
   const { authUser } = useAuthContext();
   return (
     <div className="flex items-center justify-between py-4">
-      <div className="font-bold md:text-2xl">y2 Boilerplate</div>
+      <div className="relative z-[2] bg-gradient-to-r from-amber-500 to-red-500 bg-clip-text text-center text-xl font-bold text-transparent">
+        y2 Boilerplate
+      </div>
       <div className="flex items-center gap-4">
         {authUser ? (
           <Link href="/dashboard">
