@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.className} mx-7 max-w-7xl bg-background md:mx-auto`}
+        className={`${inter.className} mx-7 max-w-7xl bg-gradient-to-r from-amber-100 to-red-100 dark:bg-background dark:from-background dark:to-green-900 md:mx-auto`}
       >
         <TanstackProvider>
           <AuthContextProvider>
