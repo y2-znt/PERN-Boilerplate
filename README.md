@@ -85,8 +85,6 @@ services:
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       - JWT_SECRET=${JWT_SECRET}
-      - SALT_ROUNDS=${SALT_ROUNDS}
-      - TOKEN_EXPIRY=${TOKEN_EXPIRY}
       - CLIENT_URL=${CLIENT_URL}
     volumes:
       - ./backend:/app

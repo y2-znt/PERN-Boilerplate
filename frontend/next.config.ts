@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   output: "standalone",
   images: {
-    domains: ["ui.shadcn.com"], // Allow images from this domain
+    domains: ["ui.shadcn.com", "lh3.googleusercontent.com"],
   },
 };
 
