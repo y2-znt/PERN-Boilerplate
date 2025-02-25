@@ -1,12 +1,9 @@
-import { ReactNode } from "react";
 import { DashboardHeader } from "../../components/shared/dashboard/header";
 import { DashboardSidebar } from "../../components/shared/dashboard/sidebar";
 
-interface DashboardLayoutProps {
-  children: ReactNode;
-}
-
-export default function Layout({ children }: DashboardLayoutProps) {
+export default function Layout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="relative flex min-h-screen">
       <DashboardSidebar className="hidden lg:block" />
