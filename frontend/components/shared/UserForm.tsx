@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAuthContext } from "../../context/authContext";
 import { createUser } from "../../lib/api/UserApi";
 import { AuthUserType } from "../../types/types";
 import { Button } from "../ui/button";
@@ -8,9 +9,12 @@ import { Input } from "../ui/input";
 
 export default function UserForm() {
   const queryClient = useQueryClient();
-
+  const { token } = useAuthContext();
   const mutation = useMutation({
-    mutationFn: createUser,
+    mutationFn: (user: AuthUserType) => {
+      if (!token) throw new Error("No token found");
+      return createUser(user, token);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       queryClient.resetQueries({ queryKey: ["users"], exact: true });

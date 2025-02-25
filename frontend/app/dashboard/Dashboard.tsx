@@ -1,14 +1,25 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import LoadingIndicator from "../../components/shared/LoadingIndicator";
 import UserForm from "../../components/shared/UserForm";
 import UsersList from "../../components/shared/UsersList";
 import { Button } from "../../components/ui/button";
 import { ThemeToggle } from "../../components/ui/themeToggle";
+import { useAuthContext } from "../../context/authContext";
 import { useLogout } from "../../hooks/useLogout";
 
 export default function Dashboard() {
   const { logout, isLoading } = useLogout();
+  const router = useRouter();
+  const { authUser } = useAuthContext();
+
+  useEffect(() => {
+    if (!authUser) {
+      router.push("/");
+    }
+  }, [authUser, router]);
 
   return (
     <div className="mx-auto max-w-7xl">
