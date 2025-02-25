@@ -18,14 +18,12 @@ const authMiddleware = async (
 
   const token = authHeader.split(" ")[1];
 
-  console.log("Token received:", token);
-
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
 
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
-      select: { id: true, username: true, email: true },
+      select: { id: true, role: true },
     });
 
     if (!user) {
@@ -33,7 +31,7 @@ const authMiddleware = async (
       return;
     }
 
-    req.user = { userId: user.id };
+    req.user = { userId: user.id, role: user.role };
     next();
   } catch (error) {
     console.error("Token verification error:", error);
