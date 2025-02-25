@@ -1,7 +1,13 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { createContext, ReactNode, useContext } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { getToken } from "../config/config";
 import { fetchAuthUser } from "../lib/api/AuthApi";
 import { AuthUserType } from "../types/types";
@@ -29,6 +35,11 @@ export const useAuthContext = () => {
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    setToken(getToken());
+  }, []);
 
   const {
     data: authUser,
@@ -45,8 +56,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const setAuthUser = (user: AuthUserType | null) => {
     queryClient.setQueryData(["authUser"], user);
   };
-
-  const token = typeof window !== "undefined" ? getToken() : null; // Ensure token is null if window is undefined in SSR
 
   return (
     <AuthContext.Provider

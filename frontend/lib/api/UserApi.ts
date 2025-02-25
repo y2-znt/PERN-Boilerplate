@@ -48,7 +48,7 @@ export const deleteUser = async (id: string, token: string) => {
 };
 
 export const updateUser = async (user: AuthUserType, token: string) => {
-  const response = await fetch(`${API_BASE_URL}/users/${user.id}`, {
+  const response = await fetch(`${API_BASE_URL}/users/${user.user.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
