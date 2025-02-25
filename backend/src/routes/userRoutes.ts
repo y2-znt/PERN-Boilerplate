@@ -6,13 +6,17 @@ import {
   getUserById,
   updateUser,
 } from "../controllers/userController";
+import authMiddleware from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.get("/", getAllUsers);
-router.get("/:id", getUserById);
+// Public routes
 router.post("/", createUser);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
+
+// Protected routes
+router.get("/", authMiddleware, getAllUsers);
+router.get("/:id", authMiddleware, getUserById);
+router.put("/:id", authMiddleware, updateUser);
+router.delete("/:id", authMiddleware, deleteUser);
 
 export default router;

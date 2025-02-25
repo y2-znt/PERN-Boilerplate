@@ -50,7 +50,11 @@ export const addUser = async ({
 
 export const editUser = async (
   id: string,
-  { username, email }: { username?: string; email?: string }
+  {
+    username,
+    email,
+    avatarUrl,
+  }: { username?: string; email?: string; avatarUrl?: string }
 ) => {
   try {
     const user = await prisma.user.update({
@@ -58,6 +62,7 @@ export const editUser = async (
       data: {
         username,
         email,
+        avatarUrl,
       },
     });
     const { password, ...userWithoutPassword } = user;

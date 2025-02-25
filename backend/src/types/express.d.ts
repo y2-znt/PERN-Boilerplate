@@ -6,8 +6,7 @@ declare global {
     // Define the User interface with userId and role properties
     interface User {
       userId: string;
-      username: string;
-      email: string;
+      role: string;
     }
   }
 }
@@ -16,5 +15,6 @@ declare global {
 export interface AuthenticatedRequest extends Request {
   user?: {
     userId: string;
+    role: string;
   };
 }

@@ -1,11 +1,15 @@
 import bcrypt from "bcrypt";
-import { z } from "zod";
 import { SALT_ROUNDS } from "../config/env";
 import prisma from "../config/prismaClient";
-import { loginSchema, registerSchema } from "../schemas/authSchema";
+import {
+  LoginSchema,
+  loginSchema,
+  RegisterSchema,
+  registerSchema,
+} from "../schemas/authSchema";
 import { generateToken } from "../utils/generateToken";
 
-export const registerUser = async (data: z.infer<typeof registerSchema>) => {
+export const registerUser = async (data: RegisterSchema) => {
   const { username, email, password, confirmPassword } =
     registerSchema.parse(data);
 
@@ -32,7 +36,7 @@ export const registerUser = async (data: z.infer<typeof registerSchema>) => {
   return { user, token };
 };
 
-export const loginUser = async (data: z.infer<typeof loginSchema>) => {
+export const loginUser = async (data: LoginSchema) => {
   const { email, password } = loginSchema.parse(data);
 
   const user = await prisma.user.findUnique({
