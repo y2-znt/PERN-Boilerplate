@@ -25,10 +25,12 @@ export function DashboardHeader({ children }: DashboardHeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 items-center gap-4 border-b px-4 md:px-6 lg:h-[60px]">
+    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 md:px-6 lg:h-[60px]">
       {children}
       <div className="flex flex-1 items-center justify-between">
-        <h1 className="text-lg font-semibold lg:text-xl">Dashboard</h1>
+        <h1 className="ml-12 text-lg font-semibold lg:mx-0 lg:text-xl">
+          Dashboard
+        </h1>
         <div className="flex items-center gap-4">
           <form
             className="hidden items-center gap-2 md:flex"
