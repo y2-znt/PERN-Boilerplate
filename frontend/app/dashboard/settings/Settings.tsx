@@ -17,8 +17,9 @@ import { useAuthContext } from "../../../context/authContext";
 import { updateUser } from "../../../lib/api/UserApi";
 
 export default function Settings() {
-  const { authUser, isLoading, error } = useAuthContext();
+  const { authUser, isLoading, error, refetchUser } = useAuthContext();
   const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   // Format date to be more readable
   const formatDate = (dateString: string) => {
@@ -31,6 +32,11 @@ export default function Settings() {
   };
 
   if (isLoading) {
+    return <SettingsSkeleton />;
+  }
+
+  if (!authUser || !authUser.user) {
+    refetchUser();
     return <SettingsSkeleton />;
   }
 
@@ -51,20 +57,19 @@ export default function Settings() {
 
   const handleSaveChanges = async () => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) throw new Error("No token found");
-
-      await updateUser(authUser, token);
+      setIsSaving(true);
+      await updateUser(authUser);
       toast.success("Profile updated successfully!");
       setIsEditing(false);
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to update profile.",
       );
+    } finally {
+      setIsSaving(false);
     }
   };
 
-  // Ensure authUser and authUser.user are defined before accessing properties
   const username = authUser?.user?.username || "User";
   const email = authUser?.user?.email || "No email";
   const avatarUrl =
@@ -93,6 +98,7 @@ export default function Settings() {
             className="ml-auto hidden sm:flex"
             variant="outline"
             onClick={() => setIsEditing(!isEditing)}
+            disabled={isSaving}
           >
             {isEditing ? "Cancel" : "Edit Profile"}
           </Button>
@@ -100,6 +106,7 @@ export default function Settings() {
             className="ml-auto flex sm:hidden"
             variant="outline"
             onClick={() => setIsEditing(!isEditing)}
+            disabled={isSaving}
           >
             <Edit3 className="h-4 w-4" />
           </Button>
@@ -167,10 +174,13 @@ export default function Settings() {
                     type="button"
                     variant="outline"
                     onClick={() => setIsEditing(false)}
+                    disabled={isSaving}
                   >
                     Cancel
                   </Button>
-                  <Button type="submit">Save Changes</Button>
+                  <Button type="submit" disabled={isSaving}>
+                    {isSaving ? "Saving..." : "Save Changes"}
+                  </Button>
                 </div>
               </form>
             </div>
