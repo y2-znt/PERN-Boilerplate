@@ -47,12 +47,11 @@ export const deleteUser = async (id: string, token: string) => {
   return response.json();
 };
 
-export const updateUser = async (user: AuthUserType, token: string) => {
+export const updateUser = async (user: AuthUserType) => {
   const response = await fetch(`${API_BASE_URL}/users/${user.user.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(user),
   });
