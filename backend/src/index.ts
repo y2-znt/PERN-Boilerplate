@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Request, Response } from "express";
 import passport from "passport";
@@ -9,16 +10,24 @@ import userRoutes from "./routes/userRoutes";
 const app = express();
 
 // CORS
-app.use(cors({ origin: CLIENT_URL }));
+app.use(
+  cors({
+    origin: CLIENT_URL,
+    credentials: true,
+  })
+);
 
-// Error handling
-app.use(errorMiddleware);
+// Cookie Parser
+app.use(cookieParser());
 
 // JSON
 app.use(express.json());
 
 // Passport
 app.use(passport.initialize());
+
+// Error handling
+app.use(errorMiddleware);
 
 // Routes
 app.use("/api/users", userRoutes);
