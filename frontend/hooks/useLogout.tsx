@@ -16,7 +16,6 @@ export const useLogout = () => {
       toast.loading("Logging out...");
     },
     onSuccess: () => {
-      localStorage.removeItem("token");
       setAuthUser(null);
       toast.success("Logged out successfully");
       router.push("/");

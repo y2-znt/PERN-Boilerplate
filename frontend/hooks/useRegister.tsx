@@ -27,8 +27,8 @@ export const useRegister = () => {
       toast.loading("Registering...");
     },
     onSuccess: (data) => {
-      toast.success("Register successful ! 🎉");
       setAuthUser(data.user);
+      toast.success("Register successful ! 🎉");
       router.push("/dashboard");
     },
     onError: (error: Error) => {
