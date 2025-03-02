@@ -1,13 +1,14 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useAuthContext } from "../context/authContext";
 import { registerUser } from "../lib/api/AuthApi";
 
 export const useRegister = () => {
-  const { setAuthUser, refetchUser } = useAuthContext();
+  const { setAuthUser } = useAuthContext();
   const router = useRouter();
   const pathname = usePathname();
+  const queryClient = useQueryClient();
 
   const registerMutation = useMutation({
     mutationFn: async (data: {
@@ -29,8 +30,10 @@ export const useRegister = () => {
     },
     onSuccess: (data) => {
       toast.success("Register successfully ! 🎉 ");
-      setAuthUser(data.user);
-      refetchUser();
+      if (data.user) {
+        setAuthUser(data.user);
+        queryClient.invalidateQueries({ queryKey: ["authUser"] });
+      }
 
       setTimeout(() => {
         if (!pathname.startsWith("/dashboard")) {
