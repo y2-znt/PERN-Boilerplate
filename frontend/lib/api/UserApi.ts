@@ -54,12 +54,13 @@ export const updateUser = async (user: AuthUserType, token: string) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(user),
+    body: JSON.stringify(user.user),
   });
 
   if (!response.ok) {
     throw new Error("Failed to update user");
   }
 
-  return response.json();
+  const updatedUser = await response.json();
+  return { user: updatedUser };
 };
