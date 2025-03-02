@@ -8,6 +8,7 @@ export const useLogin = () => {
   const { setAuthUser } = useAuthContext();
   const router = useRouter();
   const pathname = usePathname();
+
   const loginMutation = useMutation({
     mutationFn: async (data: { email: string; password: string }) => {
       const response = await loginUser(data.email, data.password);
@@ -19,7 +20,7 @@ export const useLogin = () => {
     onSuccess: (data) => {
       toast.success("Logged in successfully ! 🎉 ");
       setAuthUser(data.user);
-      if (pathname !== "/dashboard") {
+      if (!pathname.startsWith("/dashboard")) {
         router.push("/dashboard");
       }
     },

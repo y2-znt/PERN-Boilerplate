@@ -30,7 +30,7 @@ export const useRegister = () => {
     onSuccess: (data) => {
       setAuthUser(data.user);
       toast.success("Logged in successfully ! 🎉 ");
-      if (pathname !== "/dashboard") {
+      if (!pathname.startsWith("/dashboard")) {
         router.push("/dashboard");
       }
     },

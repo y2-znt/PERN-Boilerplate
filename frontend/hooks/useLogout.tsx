@@ -14,7 +14,6 @@ export const useLogout = () => {
     },
     onMutate: () => {
       toast.loading("Logging out...");
-      localStorage.removeItem("token");
       setAuthUser(null);
     },
     onSuccess: () => {
