@@ -1,14 +1,7 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { getToken } from "../config/config";
+import { createContext, ReactNode, useContext } from "react";
 import { fetchAuthUser } from "../lib/api/AuthApi";
 import { AuthUserType } from "../types/types";
 
@@ -17,7 +10,6 @@ interface AuthContextType {
   setAuthUser: (user: AuthUserType | null) => void;
   isLoading: boolean;
   error: string | null;
-  token: string | null;
   refetchUser: () => void;
 }
 
@@ -35,23 +27,19 @@ export const useAuthContext = () => {
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
-  const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    setToken(getToken());
-  }, []);
 
   const {
     data: authUser,
     isLoading,
     error,
-    refetch: refetchAuthUser,
+    refetch,
   } = useQuery<AuthUserType | null>({
     queryKey: ["authUser"],
     queryFn: fetchAuthUser,
-    staleTime: 1000 * 60 * 5, // 5 minutes
-    retry: false,
+    retry: 1,
   });
+
+  const refetchUser = () => refetch().catch(console.error);
 
   const setAuthUser = (user: AuthUserType | null) => {
     queryClient.setQueryData(["authUser"], user);
@@ -64,8 +52,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         setAuthUser,
         isLoading,
         error: error ? error.message : null,
-        token,
-        refetchUser: refetchAuthUser,
+        refetchUser,
       }}
     >
       {children}

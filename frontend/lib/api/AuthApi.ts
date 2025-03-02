@@ -57,10 +57,16 @@ export const loginUser = async (email: string, password: string) => {
 
 export const logoutUser = async () => {
   try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.warn("No token found, user might already be logged out");
+      return;
+    }
+
     const response = await fetch(`${API_BASE_URL}/auth/logout`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 

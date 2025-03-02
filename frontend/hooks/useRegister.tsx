@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useAuthContext } from "../context/authContext";
 import { registerUser } from "../lib/api/AuthApi";
@@ -7,6 +7,7 @@ import { registerUser } from "../lib/api/AuthApi";
 export const useRegister = () => {
   const { setAuthUser } = useAuthContext();
   const router = useRouter();
+  const pathname = usePathname();
 
   const registerMutation = useMutation({
     mutationFn: async (data: {
@@ -27,9 +28,11 @@ export const useRegister = () => {
       toast.loading("Registering...");
     },
     onSuccess: (data) => {
-      toast.success("Register successful ! 🎉");
       setAuthUser(data.user);
-      router.push("/dashboard");
+      toast.success("Logged in successfully ! 🎉 ");
+      if (!pathname.startsWith("/dashboard")) {
+        router.push("/dashboard");
+      }
     },
     onError: (error: Error) => {
       if (error.message === "Email already exists") {
