@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useAuthContext } from "../context/authContext";
 import { loginUser } from "../lib/api/AuthApi";
@@ -7,7 +7,7 @@ import { loginUser } from "../lib/api/AuthApi";
 export const useLogin = () => {
   const { setAuthUser } = useAuthContext();
   const router = useRouter();
-
+  const pathname = usePathname();
   const loginMutation = useMutation({
     mutationFn: async (data: { email: string; password: string }) => {
       const response = await loginUser(data.email, data.password);
@@ -19,7 +19,9 @@ export const useLogin = () => {
     onSuccess: (data) => {
       toast.success("Logged in successfully ! 🎉 ");
       setAuthUser(data.user);
-      router.push("/dashboard");
+      if (pathname !== "/dashboard") {
+        router.push("/dashboard");
+      }
     },
     onError: (error: Error) => {
       if (error.message === "User not found") {

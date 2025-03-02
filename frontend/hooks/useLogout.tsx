@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useAuthContext } from "../context/authContext";
 import { logoutUser } from "../lib/api/AuthApi";
@@ -7,19 +7,21 @@ import { logoutUser } from "../lib/api/AuthApi";
 export const useLogout = () => {
   const { setAuthUser } = useAuthContext();
   const router = useRouter();
-
+  const pathname = usePathname();
   const logoutMutation = useMutation({
     mutationFn: async () => {
       await logoutUser();
     },
     onMutate: () => {
       toast.loading("Logging out...");
-    },
-    onSuccess: () => {
       localStorage.removeItem("token");
       setAuthUser(null);
+    },
+    onSuccess: () => {
       toast.success("Logged out successfully");
-      router.push("/");
+      if (pathname !== "/") {
+        router.push("/");
+      }
     },
     onError: (error: Error) => {
       toast.error("Logout failed");
