@@ -13,14 +13,15 @@ import {
   CardTitle,
 } from "../../../components/ui/card";
 import { Input } from "../../../components/ui/input";
+import { getToken } from "../../../config/config";
 import { useAuthContext } from "../../../context/authContext";
-import { updateUser } from "../../../lib/api/UserApi";
+import { useUpdateUser } from "../../../hooks/useCurrentUser";
 
 export default function Settings() {
   const { authUser, isLoading, error } = useAuthContext();
   const [isEditing, setIsEditing] = useState(false);
+  const { updateUser } = useUpdateUser();
 
-  // Format date to be more readable
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -49,22 +50,21 @@ export default function Settings() {
     );
   }
 
-  const handleSaveChanges = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) throw new Error("No token found");
-
-      await updateUser(authUser, token);
-      toast.success("Profile updated successfully!");
-      setIsEditing(false);
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Failed to update profile.",
-      );
+  const handleSaveChanges = (username: string, email: string) => {
+    const token = getToken();
+    if (!token) {
+      toast.error("No token found");
+      return;
     }
+
+    updateUser({
+      user: { ...authUser.user, username, email },
+      token,
+    });
+
+    setIsEditing(false);
   };
 
-  // Ensure authUser and authUser.user are defined before accessing properties
   const username = authUser?.user?.username || "User";
   const email = authUser?.user?.email || "No email";
   const avatarUrl =
@@ -132,20 +132,28 @@ export default function Settings() {
                 className="space-y-4"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  handleSaveChanges();
+                  const formData = new FormData(e.target as HTMLFormElement);
+                  const newUsername = formData.get("username") as string;
+                  const newEmail = formData.get("email") as string;
+                  handleSaveChanges(newUsername, newEmail);
                 }}
               >
                 <div>
                   <label className="text-sm font-medium">Username</label>
-                  <Input defaultValue={username} className="mt-1" />
+                  <Input
+                    name="username"
+                    defaultValue={username}
+                    className="mt-1"
+                  />
                 </div>
                 <div>
                   <label className="text-sm font-medium">Email</label>
-                  <Input defaultValue={email} className="mt-1" />
+                  <Input name="email" defaultValue={email} className="mt-1" />
                 </div>
                 <div>
                   <label className="text-sm font-medium">New Password</label>
                   <Input
+                    name="password"
                     type="password"
                     className="mt-1"
                     placeholder="Leave blank to keep current password"
@@ -156,6 +164,7 @@ export default function Settings() {
                     Confirm New Password
                   </label>
                   <Input
+                    name="confirmPassword"
                     type="password"
                     className="mt-1"
                     placeholder="Leave blank to keep current password"
