@@ -5,7 +5,7 @@ import { useAuthContext } from "../context/authContext";
 import { registerUser } from "../lib/api/AuthApi";
 
 export const useRegister = () => {
-  const { setAuthUser } = useAuthContext();
+  const { setAuthUser, refetchUser } = useAuthContext();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -28,11 +28,15 @@ export const useRegister = () => {
       toast.loading("Registering...");
     },
     onSuccess: (data) => {
+      toast.success("Register successfully ! 🎉 ");
       setAuthUser(data.user);
-      toast.success("Logged in successfully ! 🎉 ");
-      if (!pathname.startsWith("/dashboard")) {
-        router.push("/dashboard");
-      }
+      refetchUser();
+
+      setTimeout(() => {
+        if (!pathname.startsWith("/dashboard")) {
+          router.push("/dashboard");
+        }
+      }, 100);
     },
     onError: (error: Error) => {
       if (error.message === "Email already exists") {

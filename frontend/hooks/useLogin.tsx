@@ -5,7 +5,7 @@ import { useAuthContext } from "../context/authContext";
 import { loginUser } from "../lib/api/AuthApi";
 
 export const useLogin = () => {
-  const { setAuthUser } = useAuthContext();
+  const { setAuthUser, refetchUser } = useAuthContext();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -20,9 +20,13 @@ export const useLogin = () => {
     onSuccess: (data) => {
       toast.success("Logged in successfully ! 🎉 ");
       setAuthUser(data.user);
-      if (!pathname.startsWith("/dashboard")) {
-        router.push("/dashboard");
-      }
+      refetchUser();
+
+      setTimeout(() => {
+        if (!pathname.startsWith("/dashboard")) {
+          router.push("/dashboard");
+        }
+      }, 100);
     },
     onError: (error: Error) => {
       if (error.message === "User not found") {

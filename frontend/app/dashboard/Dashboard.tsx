@@ -8,15 +8,8 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-import { useAuthContext } from "../../context/authContext";
 
 export default function Dashboard() {
-  const { authUser, refetchUser } = useAuthContext();
-
-  if (!authUser || !authUser.user) {
-    refetchUser();
-  }
-
   return (
     <div className="flex flex-col gap-6">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
