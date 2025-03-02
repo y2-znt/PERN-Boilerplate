@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
-import { useLogout } from "../../../hooks/useLogout";
+import { useLogout } from "../../../hooks/useAuth";
 
 interface DashboardHeaderProps {
   children?: ReactNode;

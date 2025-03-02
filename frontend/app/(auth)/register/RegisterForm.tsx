@@ -15,7 +15,7 @@ import {
   CardTitle,
 } from "../../../components/ui/card";
 import { useAuthContext } from "../../../context/authContext";
-import { useRegister } from "../../../hooks/useRegister";
+import { useRegister } from "../../../hooks/useAuth";
 import { googleAuth } from "../../../lib/api/AuthApi";
 import {
   RegisterFormValues,

@@ -16,7 +16,7 @@ import {
   CardTitle,
 } from "../../../components/ui/card";
 import { useAuthContext } from "../../../context/authContext";
-import { useLogin } from "../../../hooks/useLogin";
+import { useLogin } from "../../../hooks/useAuth";
 import { googleAuth } from "../../../lib/api/AuthApi";
 import { LoginFormValues, LoginSchema } from "../../../schemas/authSchema";
 
