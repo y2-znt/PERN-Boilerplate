@@ -1,6 +1,6 @@
 "use client";
 
-import { Edit3, User } from "lucide-react";
+import { Edit3, Trash2, User } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -15,12 +15,13 @@ import {
 import { Input } from "../../../components/ui/input";
 import { getToken } from "../../../config/config";
 import { useAuthContext } from "../../../context/authContext";
-import { useUpdateUser } from "../../../hooks/useCurrentUser";
+import { useDeleteUser, useUpdateUser } from "../../../hooks/useCurrentUser";
 
 export default function Settings() {
   const { authUser, isLoading, error } = useAuthContext();
   const [isEditing, setIsEditing] = useState(false);
   const { updateUser } = useUpdateUser();
+  const { deleteUser } = useDeleteUser();
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -65,6 +66,16 @@ export default function Settings() {
     setIsEditing(false);
   };
 
+  const handleDeleteAccount = () => {
+    if (
+      confirm(
+        "Are you sure you want to delete your account? This action cannot be undone.",
+      )
+    ) {
+      deleteUser(authUser.user.id);
+    }
+  };
+
   const username = authUser?.user?.username || "User";
   const email = authUser?.user?.email || "No email";
   const avatarUrl =
@@ -85,24 +96,26 @@ export default function Settings() {
             className="rounded-full"
             alt="Profile picture"
           />
-          <div>
+          <div className="flex-1">
             <h2 className="text-xl font-semibold">{username}</h2>
             <p className="text-gray-500">{email}</p>
           </div>
-          <Button
-            className="ml-auto hidden sm:flex"
-            variant="outline"
-            onClick={() => setIsEditing(!isEditing)}
-          >
-            {isEditing ? "Cancel" : "Edit Profile"}
-          </Button>
-          <Button
-            className="ml-auto flex sm:hidden"
-            variant="outline"
-            onClick={() => setIsEditing(!isEditing)}
-          >
-            <Edit3 className="h-4 w-4" />
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              className="hidden sm:flex"
+              variant="outline"
+              onClick={() => setIsEditing(!isEditing)}
+            >
+              {isEditing ? "Cancel" : "Edit Profile"}
+            </Button>
+            <Button
+              className="flex sm:hidden"
+              variant="outline"
+              onClick={() => setIsEditing(!isEditing)}
+            >
+              <Edit3 className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
 
         <div className="space-y-4">
@@ -185,6 +198,14 @@ export default function Settings() {
             </div>
           )}
         </div>
+        {!isEditing && (
+          <div className="mt-4 flex justify-end">
+            <Button variant="destructive" onClick={handleDeleteAccount}>
+              <Trash2 className="h-4 w-4" />
+              <span className="hidden sm:inline">Delete Account</span>
+            </Button>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
