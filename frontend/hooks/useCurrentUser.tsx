@@ -1,7 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { getToken } from "../config/config";
 import { useAuthContext } from "../context/authContext";
-import { updateUser } from "../lib/api/UserApi";
+import { deleteUser, updateUser } from "../lib/api/UserApi";
 import { AuthUserType } from "../types/types";
 
 export const useUpdateUser = () => {
@@ -52,6 +54,43 @@ export const useUpdateUser = () => {
 
   return {
     updateUser: mutation.mutate,
+    isLoading: mutation.isPending,
+  };
+};
+
+export const useDeleteUser = () => {
+  const { setAuthUser } = useAuthContext();
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const mutation = useMutation({
+    mutationFn: async (id: string) => {
+      const token = getToken();
+      if (!token) {
+        throw new Error("No token found");
+      }
+      return await deleteUser(id, token);
+    },
+    onMutate: async () => {
+      toast.loading("Deleting profile...");
+    },
+    onSuccess: () => {
+      toast.success("Profile deleted successfully! 🎉");
+      queryClient.invalidateQueries({ queryKey: ["authUser"] });
+      setAuthUser(null);
+      router.push("/");
+    },
+    onError: (error) => {
+      toast.error("Failed to delete profile. Please try again.");
+      console.error("Error deleting user:", error);
+    },
+    onSettled: () => {
+      toast.dismiss();
+    },
+  });
+
+  return {
+    deleteUser: mutation.mutate,
     isLoading: mutation.isPending,
   };
 };
